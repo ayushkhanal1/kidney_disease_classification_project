@@ -10,6 +10,8 @@ class ModelTrainingPipeline:
     """
     Orchestrates the model training pipeline stage.
     Connects the configuration management with the Training component.
+    
+    This class acts as the 'glue' between your settings and the actual training logic.
     """
     def __init__(self):
         pass
@@ -21,17 +23,17 @@ class ModelTrainingPipeline:
         2. Instantiate the Training component.
         3. Load base model, setup generators, and start training.
         """
-        # Step 1: Manage and fetch training configuration
+        # Step 1: Manage and fetch training configuration (paths, hyperparameters)
         config = ConfigurationManager()
         training_config = config.get_training_config()
         
-        # Step 2: Initialize the Training component with config
+        # Step 2: Initialize the Training component with the fetched config
         training = Training(config=training_config)
         
-        # Step 3: Execute training steps
-        training.get_base_model()         # Load the prepared base model
-        training.train_valid_generator()  # Prepare data generators (train/val)
-        training.train()                  # Perform training with re-compilation fix
+        # Step 3: Run the training workflow:
+        training.get_base_model()         # 1. Load the customized VGG16 model from artifacts
+        training.train_valid_generator()  # 2. Prepare the images (normalization & augmentation)
+        training.train()                  # 3. Start training and save the final result
 
 
 if __name__ == '__main__':

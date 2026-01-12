@@ -34,13 +34,16 @@ class TrainingConfig:
     """
     Configuration for the model training component.
     Defines paths and parameters required for the training process.
+    
+    NOTE: Using 'frozen=True' makes this class immutable, meaning you 
+    can't accidentally change these values once they're set during training.
     """
-    root_dir: Path                # Directory for training artifacts
-    trained_model_path: Path      # Path where the final trained model will be saved
-    updated_base_model_path: Path # Path to the base model that will be trained
-    training_data: Path           # Path to the directory containing training images
-    params_epochs: int            # Number of training epochs
-    params_batch_size: int        # Size of each training batch
-    params_is_augmentation: bool  # Whether to apply data augmentation
-    params_image_size: list       # Input size for the model
-    params_learning_rate: float   # Learning rate for the optimizer
+    root_dir: Path                # Directory where training logs and results are saved
+    trained_model_path: Path      # Full path (including filename) to save the final trained .h5 model
+    updated_base_model_path: Path # Path to the custom base model (the one with your added top layers)
+    training_data: Path           # Folder containing the dataset (e.g., 'Normal' and 'Tumor' subfolders)
+    params_epochs: int            # How many times the model sees the entire dataset
+    params_batch_size: int        # Number of images processed at once before updating model weights
+    params_is_augmentation: bool  # Toggle for 'Data Augmentation' to help prevent overfitting
+    params_image_size: list       # Image resolution as defined in params.yaml (e.g., [224, 224, 3])
+    params_learning_rate: float   # The step size for the optimizer during weight updates

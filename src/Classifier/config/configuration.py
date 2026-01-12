@@ -67,12 +67,15 @@ class ConfigurationManager:
         training = self.config.training
         prepare_base_model = self.config.prepare_base_model
         params = self.params
+        
+        # We construct the path to the extracted dataset.
+        # It's located in the unzip_dir (artifacts/data_ingestion) under the 'kidney-ct-scan-image' folder.
         training_data = os.path.join(self.config.data_ingestion.unzip_dir, "kidney-ct-scan-image")
         
-        # Ensure the directory for storing training artifacts exists
+        # Ensure the directory for storing training artifacts (models, plots) exists
         create_directories([Path(training.root_dir)])
 
-        # Create and return the configuration object
+        # Map all values from config.yaml and params.yaml into our TrainingConfig entity
         training_config = TrainingConfig(
             root_dir=Path(training.root_dir),
             trained_model_path=Path(training.trained_model_path),
