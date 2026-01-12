@@ -29,20 +29,24 @@ list_of_files = [
 ]
 
 
+# Iterate through the list of files to create the project structure
 for filepath in list_of_files:
     filepath = Path(filepath)
     filedir, filename = os.path.split(filepath)
 
 
+    # If the directory doesn't exist, create it
     if filedir !="":
         os.makedirs(filedir, exist_ok=True)
         logging.info(f"Creating directory; {filedir} for the file: {filename}")
 
+    # Create the file if it doesn't exist or if it's empty
     if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
         with open(filepath, "w") as f:
-            pass
+            pass # Just create an empty file
             logging.info(f"Creating empty file: {filepath}")
 
 
     else:
+        # File already exists and has content
         logging.info(f"{filename} is already exists")

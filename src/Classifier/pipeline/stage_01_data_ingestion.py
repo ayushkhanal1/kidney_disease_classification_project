@@ -1,9 +1,7 @@
 from src.logger import logging
-from Classifier.config.configuration import ConfigurationManager
-from Classifier.components.data_ingestion import dataingestion
-
+from src.Classifier.config.configuration import ConfigurationManager
+from src.Classifier.components.data_ingestion import dataingestion
 STAGE_NAME = "Data Ingestion" 
-
 class DataIngestionTrainingPipeline:
     def __init__(self):
         pass

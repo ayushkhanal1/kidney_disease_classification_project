@@ -29,19 +29,20 @@ def get_requirements(file_path:str) ->List[str]:  # Define a function to read re
 
 
 setuptools.setup(
-    name=SRC_REPO,
-    version=__version__,
-    author=AUTHOR_USER_NAME,
-    author_email=AUTHOR_EMAIL,
-    description="A small python package for CNN app",
-    long_description=long_description,
-    long_description_content="text/markdown",
-    url=f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}",
+    name=SRC_REPO,            # Name of the package
+    version=__version__,      # Version number
+    author=AUTHOR_USER_NAME, # Author's username
+    author_email=AUTHOR_EMAIL,# Author's email
+    description="A small python package for CNN app", # Brief description
+    long_description=long_description, # Full description from README.md
+    long_description_content="text/markdown", # Format of the long description
+    url=f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}", # Project URL
     project_urls={
-        "Bug Tracker": f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}/issues",
+        "Bug Tracker": f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}/issues", # Bug tracker URL
     },
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
-    install_requires=get_requirements('requirements.txt')
+    package_dir={"": "src"}, # Directory containing the source code
+    packages=setuptools.find_packages(where="src"), # Automatically find packages in the src directory
+    install_requires=get_requirements('requirements.txt') # Dependencies to install
     )
+
 
