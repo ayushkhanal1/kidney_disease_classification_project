@@ -40,7 +40,7 @@ class EvaluationTrainingPipeline:
         
         # Step 3: Start evaluation process
         evaluation.evaluation()      # Calculate and save metrics (e.g., scores.json)
-        evaluation.log_into_mlflow()  # Record experience metrics and parameters in MLflow
+        #evaluation.log_into_mlflow()  # Record experience metrics and parameters in MLflow
 
 
 
