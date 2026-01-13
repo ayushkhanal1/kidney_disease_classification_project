@@ -29,7 +29,7 @@ class PredictionPipeline:
         # Load model once during initialization to improve prediction speed
         # We load the model from the artifacts directory created during the Training stage.
         # This is the 'final' model after weights have been optimized.
-        self.model = load_model(os.path.join("artifacts", "training", "model.h5"))
+        self.model = load_model(os.path.join("model","model.h5"))
 
     
     def predict(self):
