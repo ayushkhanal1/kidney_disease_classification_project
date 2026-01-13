@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent.parent))
+
 from src.logger import logging
 from src.Classifier.config.configuration import ConfigurationManager
 from src.Classifier.components.data_ingestion import dataingestion
