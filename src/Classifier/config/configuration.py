@@ -4,20 +4,27 @@ from src.Classifier.utils.common import read_yaml, create_directories
 from src.Classifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig, TrainingConfig, EvaluationConfig)
 class ConfigurationManager:
     """
-    Manages the configuration for the entire project.
-    Reads YAML files and provides configuration objects for different components.
+    CONFIGURATION MANAGER
+    ---------------------
+    This class is the 'brain' of the project's settings. Instead of hardcoding 
+    paths and values inside the components, we use this manager to:
+    1. Read the raw settings from YAML files (config.yaml, params.yaml).
+    2. Convert those settings into structured 'Entity' objects (Dataclasses).
+    
+    This separation makes the code highly modular and easy to update.
     """
     def __init__(
         self,
         config_filepath=CONFIG_FILE_PATH,
         params_filepath=PARAMS_FILE_PATH):
         """
-        Initializes ConfigurationManager with config and params file paths.
-        Creates the root directory for artifacts.
+        Initializes the manager by loading the YAML files and creating 
+        the base root directory for all artifacts.
         """
         self.config = read_yaml(config_filepath)
         self.params = read_yaml(params_filepath)
         
+        # Create the 'artifacts' folder if it doesn't exist
         create_directories([Path(self.config.artifacts_root)])
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:

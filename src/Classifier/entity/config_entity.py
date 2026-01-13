@@ -51,9 +51,13 @@ class TrainingConfig:
 
 @dataclass(frozen=True)
 class EvaluationConfig:
-    path_of_model: Path
-    training_data: Path
-    all_params: dict
-    mlflow_uri: str
-    params_image_size: list
-    params_batch_size: int
+    """
+    Configuration for the model evaluation component.
+    Defines the parameters for validating the model and logging to MLflow.
+    """
+    path_of_model: Path     # Path to the trained .h5 model file
+    training_data: Path     # Folder containing the data to be used for evaluation
+    all_params: dict        # All hyperparameters from params.yaml for logging purposes
+    mlflow_uri: str         # Remote URI for MLflow (e.g., DagsHub tracking URL)
+    params_image_size: list # Expected image resolution
+    params_batch_size: int  # Number of images to process in each evaluation batch
