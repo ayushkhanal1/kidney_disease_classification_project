@@ -1,7 +1,7 @@
 import os
 from src.Classifier.constants import *
 from src.Classifier.utils.common import read_yaml, create_directories
-from src.Classifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig, TrainingConfig)
+from src.Classifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig, TrainingConfig, EvaluationConfig)
 class ConfigurationManager:
     """
     Manages the configuration for the entire project.
@@ -89,4 +89,21 @@ class ConfigurationManager:
         )
 
         return training_config
+
+
+    def get_evaluation_config(self) -> EvaluationConfig:
+        """
+        Extracts evaluation configuration and return EvaluationConfig object.
+        Maps the model path, data path, and MLflow URI for experiment tracking.
+        """
+        eval_config = EvaluationConfig(
+            path_of_model="artifacts/training/model.h5", # Pointing to the latest trained model
+            training_data="artifacts/data_ingestion/kidney-ct-scan-image", # Dataset for validation
+            # URI for MLflow experiment tracking (connected to DagsHub in this case)
+            mlflow_uri="https://dagshub.com/ayukhanalsh100/kidney_disease_classification_project.mlflow",
+            all_params=self.params, # Passing hyperparameters to log them in MLflow
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
+        )
+        return eval_config
 

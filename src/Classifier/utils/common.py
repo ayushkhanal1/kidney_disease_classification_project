@@ -1,3 +1,16 @@
+"""
+UTILITY FUNCTIONS
+-----------------
+This file contains common helper functions used throughout the project.
+It handles file operations (YAML, JSON, Binary), image processing, 
+and directory management.
+
+Key Pattern: We use 'ConfigBox' from the 'python-box' library.
+This allows us to access dictionary keys using dot notation (config.key) 
+instead of the standard dictionary syntax (config['key']), which makes 
+the code much cleaner.
+"""
+
 import os
 from box.exceptions import BoxValueError
 import yaml

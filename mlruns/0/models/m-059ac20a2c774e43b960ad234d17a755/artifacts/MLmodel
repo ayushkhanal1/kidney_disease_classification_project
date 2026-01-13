@@ -1,0 +1,20 @@
+artifact_path: file:D:/kidney_disease_classification_project/mlruns/0/models/m-059ac20a2c774e43b960ad234d17a755/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.13.0
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.13.9
+mlflow_version: 3.8.1
+model_id: m-059ac20a2c774e43b960ad234d17a755
+model_size_bytes: 59141299
+model_uuid: m-059ac20a2c774e43b960ad234d17a755
+prompts: null
+run_id: 85b8e2d38a234c47bcdfcc898ca5bc06
+utc_time_created: '2026-01-13 12:04:25.808505'

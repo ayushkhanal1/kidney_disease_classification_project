@@ -9,7 +9,9 @@ from src.Classifier.entity.config_entity import PrepareBaseModelConfig
 class PrepareBaseModel:
     """
     Component for downloading and customizing a pre-trained model.
-    It uses VGG16 as an example and adds custom top layers for the kidney disease classification.
+    
+    This component implements 'Transfer Learning'. We take a model that already knows 
+    how to see (VGG16 trained on ImageNet) and adapt it to our kidney scan data.
     """
     def __init__(self, config: PrepareBaseModelConfig):
         """
@@ -20,13 +22,15 @@ class PrepareBaseModel:
     
     def get_base_model(self):
         """
-        Loads the pre-trained VGG16 model with the specified image size and weights.
-        The top layers (fully connected part) can be excluded via configuration.
+        Loads the pre-trained VGG16 model.
+        
+        VGG16 is a famous deep learning architecture. 'imagenet' weights mean it 
+        already has 'knowledge' from millions of generic images.
         """
         self.model = tf.keras.applications.vgg16.VGG16(
             input_shape=self.config.params_image_size,
             weights=self.config.params_weights,
-            include_top=self.config.params_include_top
+            include_top=self.config.params_include_top # Usually False, so we can add our own classification head
         )
 
         # Saves the raw base model for future reference or reuse
@@ -37,11 +41,11 @@ class PrepareBaseModel:
     @staticmethod
     def _prepare_full_model(model, classes, freeze_all, freeze_till, learning_rate):
         """
-        A helper function to customize the architecture:
-        - Freezes specified layers.
-        - Flattens the output of the base model.
-        - Adds a Dense layer for prediction.
-        - Compiles the final model.
+        Technical Core: Adapting the model for our specific task.
+        
+        Why do we freeze layers? 
+        The early layers of VGG16 detect basic shapes (edges, circles). We 'freeze' 
+        them so we don't destroy this knowledge during training.
         """
         # Freeze base layers to prevent retraining if needed
         if freeze_all:
@@ -51,8 +55,11 @@ class PrepareBaseModel:
             for layer in model.layers[:-freeze_till]:
                 layer.trainable = False
 
-        # Build custom classification layers on top of the base model output
+        # 2. Flattening: Converts the 2D visual features into a 1D vector.
         flatten_in = tf.keras.layers.Flatten()(model.output)
+        
+        # 3. Dense Layer: The actual 'brain' that decides the class.
+        # 'softmax' activation converts the output into probabilities for each class.
         prediction = tf.keras.layers.Dense(
             units=classes,
             activation="softmax"
@@ -77,12 +84,12 @@ class PrepareBaseModel:
     
     def update_base_model(self):
         """
-        Triggers the creation of the full model using updated parameters (e.g., classes, LR).
+        Orchestrates the creation of the final trainable model.
         """
         self.full_model = self._prepare_full_model(
             model=self.model,
             classes=self.config.params_classes,
-            freeze_all=True,
+            freeze_all=True,              # Freeze VGG16 layers (Transfer Learning)
             freeze_till=None,
             learning_rate=self.config.params_learning_rate
         )

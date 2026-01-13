@@ -47,3 +47,13 @@ class TrainingConfig:
     params_is_augmentation: bool  # Toggle for 'Data Augmentation' to help prevent overfitting
     params_image_size: list       # Image resolution as defined in params.yaml (e.g., [224, 224, 3])
     params_learning_rate: float   # The step size for the optimizer during weight updates
+
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    path_of_model: Path
+    training_data: Path
+    all_params: dict
+    mlflow_uri: str
+    params_image_size: list
+    params_batch_size: int

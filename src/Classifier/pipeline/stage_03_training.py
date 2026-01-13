@@ -42,8 +42,8 @@ if __name__ == '__main__':
         logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
         
         # Instantiate and run the pipeline stage
-        obj = ModelTrainingPipeline()
-        obj.main()
+        modeltraining = ModelTrainingPipeline()
+        modeltraining.main()
         
         logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
     except Exception as e:
